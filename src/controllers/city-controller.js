@@ -122,10 +122,35 @@ const getAll = async (req, res) => {
   res.send(response);
 };
 
+const bulkCreate = async (req, res) => {
+  const response = {
+    status: 400,
+    data: null,
+    sucess: true,
+    message: "",
+    error: {}
+  };
+  try {
+    const city = await cityService.bulkCreateCities(req.body.Data);
+    response.status = 200;
+    response.data = city;
+    response.sucess = true;
+    response.message = "successfully added cities";
+  } catch (error) {
+    response.status = 500;
+    response.data = {};
+    response.sucess = false;
+    response.message = "Not able to add cities";
+    response.error = error;
+  }
+  res.send(response);
+};
+
 module.exports = {
   create,
   destroy,
   get,
   update,
-  getAll
+  getAll,
+  bulkCreate
 };

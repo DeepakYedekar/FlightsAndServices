@@ -48,7 +48,19 @@ class cityService {
 
   async getAllCities(filter) {
     try {
-      const response = await this.cityRepository.getAllCity({name:filter.name});
+      const response = await this.cityRepository.getAllCity({
+        name: filter.name
+      });
+      return response;
+    } catch (error) {
+      console.log("something went wrong with service layer");
+      throw { error };
+    }
+  }
+
+  async bulkCreateCities(Data) {
+    try {
+      const response = await this.cityRepository.bulkCreate(Data);
       return response;
     } catch (error) {
       console.log("something went wrong with service layer");
