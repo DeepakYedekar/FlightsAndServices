@@ -1,50 +1,11 @@
 const { City } = require('../models/index');
 const { Op } = require('sequelize');
+const CrudRepository = require('./crud-repository');
+const {City} = require('../models/index');
 
-class cityRepository {
-  async createCity({ name }) {
-    try {
-      const city = await City.create({ name });
-      return city;
-    } catch (error) {
-      console.log("something went wrong with city repository");
-      throw { error };
-    }
-  }
-
-  async deleteCity(cityId) {
-    try {
-      await City.destroy({
-        where: {
-          id: cityId
-        }
-      });
-      return true;
-    } catch (error) {
-      console.log("something went wrong with city repository");
-      throw { error };
-    }
-  }
-
-  async updateCity(cityId, data) {
-    // {name:"Mumbai"}
-    try {
-      const city = await City.update(data, { where: { _id: cityId } });
-      return city;
-    } catch (error) {
-      console.log("something went wrong with city repository");
-      throw { error };
-    }
-  }
-
-  async getCity(cityId) {
-    try {
-      const city = await City.findByPk(cityId);
-      return city;
-    } catch (error) {
-      console.log("something went wrong with city repository");
-      throw { error };
-    }
+class cityRepository extends CrudRepository {
+  constructor() {
+    super(City);
   }
   async getAllCity(filter) {
     try {
@@ -67,9 +28,9 @@ class cityRepository {
   }
 
   async bulkCreate(Data) {
-      try {
-          const city = await City.bulkCreate(Data);
-          return city;
+    try {
+      const city = await City.bulkCreate(Data);
+      return city;
     } catch (error) {
       console.log("something went wrong with city repository");
       throw { error };
